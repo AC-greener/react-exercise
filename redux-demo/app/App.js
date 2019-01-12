@@ -12,15 +12,18 @@ function mapStateToProps(state) {
 // Map Redux actions to component props
 function mapDispatchToProps(dispatch) {
   return {
-    onChange: (e) => dispatch({
-      type: 'change',
-      payload: e.target.value
-    })
+    onChange: (e) => {
+      console.log(1111111111)
+      dispatch({
+        type: 'change',
+        payload: e.target.value
+      })
+    }
   }
 }
 
 // Connected Component
-const App = connect(
+const App = connect(   //返回一个新的容器组件
   mapStateToProps,
   mapDispatchToProps
 )(MyComponent);

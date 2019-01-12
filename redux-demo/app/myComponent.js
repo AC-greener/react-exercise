@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+//纯UI组件
 class MyComponent extends React.Component {
   render() {
     return (
