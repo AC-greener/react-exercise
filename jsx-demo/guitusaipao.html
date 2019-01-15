@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="react.js"></script>
+  <script src="react-dom.js"></script>
+  <script src="babel.min.js"></script>
+  <style>
+    .track {
+      border-bottom: 1px solid green;
+    }
+    body {
+      padding-right: 80px;
+    }
+    span {
+      display: inline-block
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    class App extends React.Component {
+      constructor(props) {
+        super(props) 
+        this.t0 = new Date()
+        this.state = {
+          result1: 0,
+          result2: 0
+        }
+      }
+    //   子组件给父组件传值
+      success1() {
+        console.log('兔子跑完了1')
+        let t1 = new Date() - this.t0
+        this.setState({
+          result1: t1
+        })
+      }
+      success2() {
+        console.log('乌龟跑完了1')
+        let t2 = new Date() - this.t0
+        this.setState({
+          result2: t2
+        })
+      }
+    render() {
+      return (
+        <div>
+          <Time1 useTime={this.state.result1}/>
+          <Time2 useTime={this.state.result2} />
+          <Playground success1={this.success1.bind(this)} success2={this.success2.bind(this)}/>
+        </div>
+      )
+    }
+}
+    function Playground(props) {
+      let success1 = props.success1
+      let success2 = props.success2
+      return (
+        <div>
+          <Track1 success={success1}/>
+          <Track2 success={success2}/>  
+        </div>
+      )
+    }
+    function Time1(props) {
+      console.log(props.useTime)
+      return (
+        <div>
+          tuzi用时：{props.useTime}
+        </div>
+      )
+    }
+    function Time2(props) {
+      console.log(props.useTime)
+      return (
+        <div>
+          wugui用时：{props.useTime}
+        </div>
+      )
+    }
+class Track1 extends React.Component {
+  constructor(props) {
+    super(props)
+    let n = 0
+    this.state = {
+      style: {
+        transform: `translateX(${n}%)`
+      }
+    }
+     this.timeId = setInterval(() => {
+       n += 5
+       this.setState({
+         style: {
+          transform: `translateX(${n}%)`,
+         }
+       })
+      if(n >= 100) {
+        clearInterval(this.timeId)
+        this.props.success()
+      }
+    }, 100)
+  }
+   
+  render() {
+    return (
+    <div>
+      <div style={this.state.style}>tuzi</div>
+      <div className='track'></div>
+    </div>
+    )
+  }
+}
+
+class Track2 extends React.Component {
+  constructor(props) {
+    super(props)
+    let n = 0
+    this.state = {
+      style: {
+        transform: `translateX(${n}%)`
+      }
+    }
+     this.timeId = setInterval(() => {
+       n += 2
+       this.setState({
+         style: {
+          transform: `translateX(${n}%)`,
+         }
+       })
+      if(n >= 100) {
+        clearInterval(this.timeId)
+        this.props.success()
+      }
+    }, 100)
+  }
+  render() {
+    return (
+      <div>
+        <div style={this.state.style}>wugui</div>
+        <div className='track'></div>
+      </div>
+    )
+  }
+}
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root')
+    );
+
+  </script>
+</body>
+
+</html>
