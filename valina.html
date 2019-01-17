@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/redux/4.0.1/redux.min.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  
+  <script>
+    let store
+    function add1() {
+      // 1 dispatch 一个 action
+      store.dispatch({type: 'add', payload: 1})
+    }
+    function add2() {
+      store.dispatch({type: 'add', payload: 2})
+    }
+    function add3() {
+      let oldState = store.getState()
+      if(oldState % 2 === 1) {
+        store.dispatch({type: 'add', payload: 1})
+      }
+    }
+    function add4() {
+      setTimeout(() => {
+        store.dispatch({type: 'add', payload: 1})
+      }, 2000)
+    }
+    function render(store) {
+      var app = document.getElementById('app')
+      app.innerHTML = `
+        <span>你点击了${store.getState()}次</span>
+        <button id="add1" onclick="add1()">+1</button>
+        <button id="add2" onclick="add2()">+2</button>
+        <button id="add3" onclick="add3()">奇数+1</button>
+        <button id="add4" onclick="add4()">两秒后+1</button>
+      `
+    }
+    function stateChange(state, action) {
+      if(state === undefined) {
+        return 0
+      }
+      if(action.type === 'add') {
+        var newState = state + action.payload
+        // 2 根据操作生成新的 state, 触发一个事件
+
+        return newState
+      } else {
+        return state
+      }
+      
+    }
+    store = Redux.createStore(stateChange)
+    render(store)
+    store.subscribe(() => {
+     // 3 接收到事件，重新 render
+
+      render(store)
+    })
+  </script>
+</body>
+</html>
