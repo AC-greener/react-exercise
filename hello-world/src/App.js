@@ -3,28 +3,38 @@ import logo from './logo.svg';
 import './App.css';
 //appJs中主要写一些逻辑
 //indexJs是项目入口
-class App extends Component {
-  render() {
-    return (
-      // XMl语法  一种简写的js代码
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+// XMl语法 标签不闭合 一种简写的js代码
+
+function App() {
+  return (
+    <div className='header'>
+      <Wugui/>
+      <Judge/>
+      <Tuzi/>
+    </div>
+  )
+}
+
+function Wugui() {
+   return ( 
+     <div>
+       我是乌龟,用时：
+     </div>
+   )
+}
+function Tuzi() {
+   return ( 
+     <div>
+      我是兔子,用时:
+     </div>
+   )
+}
+function Judge() {
+   return ( 
+     <div>
+      裁判
+     </div>
+   )
 }
 
 export default App;
